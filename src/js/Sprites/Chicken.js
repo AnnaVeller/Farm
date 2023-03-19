@@ -1,15 +1,15 @@
 import Sprite from "../Engine/Sprite"
 import {EVENTS} from "../config"
 
-const TIME_EAT_WHEAL = 20000 // ms
-const TIME_GAVE_MILK = 20000 // ms
+const TIME_EAT_WHEAL = 30000 // ms
+const TIME_GAVE_EGG = 10000 // ms
 
 const STATE = {
   calm: 'calm',
   eat: 'eat'
 }
 
-export default class Cow extends Sprite {
+export default class Chicken extends Sprite {
   constructor(game, config) {
     super(game, config)
 
@@ -55,7 +55,9 @@ export default class Cow extends Sprite {
 
     if (this.timeLeft < 0) {
       this.timeLeft = 0
-      this.game.events.emit(EVENTS.addMilk)
+      this.game.events.emit(EVENTS.addEgg)
+      this.game.events.emit(EVENTS.addEgg)
+      this.game.events.emit(EVENTS.addEgg)
       this.state = STATE.calm
       this.eatTween && this.eatTween.stop()
       timer.content.alpha = 0
