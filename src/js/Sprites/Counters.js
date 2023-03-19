@@ -17,8 +17,6 @@ export default class Counters {
       interactive: true
     })
 
-    this.game.input.setDraggable(wheatIcon.content)
-
     this.wheatCountText = new TextSprite(this.game, {
       x: 60, y: 0,
       text: 0,
@@ -79,6 +77,10 @@ export default class Counters {
       milkIcon.content, this.milkCountText.content, milkSellBtn.content,
       coinIcon.content, coinCount.content,
     ])
+  }
+
+  minusWheat() {
+    this.wheatCountText.changeText(--this.wheatCount)
   }
 
   addWheat() {

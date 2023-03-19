@@ -1,5 +1,8 @@
 export const EVENTS = {
-  pickupWheat: 'pickupWheat'
+  pickupWheat: 'pickupWheat',
+  eatWheat: 'eatWheat',
+  addEgg: 'addEgg',
+  addMilk: 'addMilk',
 }
 
 export const SCENE_CONFIG = {

@@ -36,12 +36,16 @@ export default class GameScene extends Phaser.Scene {
     const dragNDrop = new DragNDrop(this, {})
 
     this.events.on(EVENTS.pickupWheat, counters.addWheat, counters)
+    this.events.on(EVENTS.addEgg, counters.addEgg, counters)
+    this.events.on(EVENTS.addMilk, counters.addMilk, counters)
+    this.events.on(EVENTS.eatWheat, counters.minusWheat, counters)
 
     this.scale.on('resize', this.resize, this)
     this.resize(this.scale.gameSize)
   }
 
   update(time, delta) {
+    this.containers.field.update(time, delta)
   }
 
   resize() {

@@ -29,6 +29,10 @@ export default class Field {
     return field
   }
 
+  update(time, delta) {
+    this.container.list.forEach(el => el.parentClass.update(time, delta))
+  }
+
   getObject(config) {
     return Object.assign({x: 0, y: 0}, config)
   }
