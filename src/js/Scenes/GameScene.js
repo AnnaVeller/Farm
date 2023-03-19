@@ -1,9 +1,11 @@
 import Phaser from "phaser"
-import {resize} from "../Engine/resizer"
+import {getWorldView, resize} from "../Engine/resizer"
 import Sprite from "../Engine/Sprite"
 import Field from "../Sprites/Field"
 import Shop from "../Sprites/Shop"
 import Counters from "../Sprites/Counters"
+import {EVENTS} from "../config"
+import DragNDrop from "../Sprites/DragNDrop"
 
 export default class GameScene extends Phaser.Scene {
   constructor() {
@@ -31,6 +33,10 @@ export default class GameScene extends Phaser.Scene {
     const shop = new Shop(this, {x: 400, y: 300})
     this.containers.shop = shop.container
 
+    const dragNDrop = new DragNDrop(this, {})
+
+    this.events.on(EVENTS.pickupWheat, counters.addWheat, counters)
+
     this.scale.on('resize', this.resize, this)
     this.resize(this.scale.gameSize)
   }
@@ -43,8 +49,18 @@ export default class GameScene extends Phaser.Scene {
     if (!this.scene.settings.active) return
 
     resize(this)
+
+    // левый вверх экрана
+    const worldView = getWorldView(this.cameras.main)
+
+    // правый низ экрана
+    const bottomScreen = {
+      x: worldView.x + this.cameras.main.displayWidth,
+      y: worldView.y + this.cameras.main.displayHeight
+    }
+
+    this.containers.shop.setPosition(bottomScreen.x - 300, worldView.y + 100)
+    this.containers.counters.setPosition(worldView.x + 80, worldView.y + 100)
   }
 
 }
-
-

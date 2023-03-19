@@ -1,3 +1,6 @@
+export const EVENTS = {
+  pickupWheat: 'pickupWheat'
+}
 
 export const SCENE_CONFIG = {
   sprites: [
@@ -48,11 +51,16 @@ export const SCENE_CONFIG = {
       url: require('../assets/chicken.png'),
     },
 
-
     {
       key: 'shop',
       type: 'image',
       url: require('../assets/shop.png'),
+    },
+
+    {
+      key: 'sellBtn',
+      type: 'image',
+      url: require('../assets/sellBtn.png'),
     },
 
   ]

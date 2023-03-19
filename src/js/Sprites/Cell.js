@@ -1,4 +1,5 @@
 import Sprite from "../Engine/Sprite"
+import {EVENTS} from "../config"
 
 export default class Cell {
   constructor(game, config) {
@@ -38,38 +39,62 @@ export default class Cell {
 
   showObject(name = '') {
     this.field.content.clearTint()
-
-    // switch (name) {
-    //   case 'cow':
-    //     this.showCow()
-    //     break
-    //   case 'wheat':
-    //     this.showWheat()
-    //     break
-    //   case 'chicken':
-    //     this.showChicken()
-    //     break
-    // }
-
     this.field.content.removeInteractive()
-    this[name].content.alpha = 1
 
+    switch (name) {
+      case 'cow':
+        this.showCow()
+        break
+      case 'wheat':
+        this.showWheat()
+        break
+      case 'chicken':
+        this.showChicken()
+        break
+    }
   }
 
-  // showCow() {
-  //   this.field.content.removeInteractive()
-  //   this.cow.content.alpha = 1
-  // }
-  //
-  // showWheat() {
-  //   this.field.content.removeInteractive()
-  //   this.wheat.content.alpha = 1
-  // }
-  //
-  // showChicken() {
-  //   this.field.content.removeInteractive()
-  //   this.chicken.content.alpha = 1
-  // }
+  showCow() {
+    this.cow.content.alpha = 1
+  }
+
+  showWheat() {
+    this.addGrowUpTween()
+  }
+
+  addGrowUpTween() {
+    this.game.tweens.add({
+      targets: this.wheat.content,
+      scaleX: {from: 0.4, to: 1},
+      scaleY: {from: 0.4, to: 1},
+      alpha: {from: 0.3, to: 0.8},
+      duration: 1000,
+      onStart: () => {
+        this.wheat.content.tint = 0x808080
+      },
+      onComplete: () => {
+        this.wheat.content.clearTint()
+        this.wheat.content.alpha = 1
+        this.wheat.content.setScale(1)
+        this.wheat.content.setInteractive()
+        this.wheat.content.on('pointerdown', () => this.pickUpWheat())
+      },
+    })
+  }
+
+  pickUpWheat() {
+    this.wheat.content.alpha = 0
+    this.wheat.content.removeInteractive()
+    this.wheat.content.removeAllListeners('pointerdown')
+
+    // эмитим событие, что пшеницу собрали
+    this.game.events.emit(EVENTS.pickupWheat)
+    this.addGrowUpTween()
+  }
+
+  showChicken() {
+    this.chicken.content.alpha = 1
+  }
 
   getObject(config) {
     return Object.assign({x: 0, y: 0}, config)

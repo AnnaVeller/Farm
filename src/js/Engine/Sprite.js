@@ -7,11 +7,13 @@ export default class Sprite {
     this.content.alpha = this.config.alpha
     this.content.setOrigin(this.config.origin.x, this.config.origin.y)
     this.content.setScale(this.config.scale.x, this.config.scale.y)
+    this.name = this.config.name
 
     this.content.parentClass = this
 
-    this.name = this.config.name
-
+    if (this.config.tint) {
+      this.content.tint = this.config.tint
+    }
     if (this.config.interactive) {
       this.content.setInteractive()
     }

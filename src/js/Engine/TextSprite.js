@@ -3,7 +3,7 @@ export default class TextSprite {
     this.game = game
     this.config = this.getObject(config)
     this.style = this.getStyles(config)
-    this.content = game.add.text(this.config.x, this.config.y, this.config.text, this.style)
+    this.content = this.game.add.text(this.config.x, this.config.y, this.config.text, this.style)
     this.content.alpha = this.config.alpha
 
     this.content.setOrigin(this.config.origin.x, this.config.origin.y)
