@@ -8,6 +8,10 @@ export default class Sprite {
     this.content.setOrigin(this.config.origin.x, this.config.origin.y)
     this.content.setScale(this.config.scale.x, this.config.scale.y)
 
+    this.content.parentClass = this
+
+    this.name = this.config.name
+
     if (this.config.interactive) {
       this.content.setInteractive()
     }
@@ -25,6 +29,7 @@ export default class Sprite {
       scale: {x: 1, y: 1},
       origin: {x: 0.5, y: 0.5},
       interactive: false,
+      name: ''
     }, config)
   }
 }

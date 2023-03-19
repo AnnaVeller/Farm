@@ -10,6 +10,8 @@ export default class StartScene extends Phaser.Scene {
   }
 
   create() {
+    this.scene.start('Game')
+
 
     this.scale.on('resize', this.resize, this)
     this.resize(this.scale.gameSize)
