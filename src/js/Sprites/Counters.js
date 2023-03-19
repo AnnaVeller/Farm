@@ -1,15 +1,14 @@
 import Sprite from "../Engine/Sprite"
 import TextSprite from "../Engine/TextSprite"
+import {EVENTS} from "../config"
+
+const EGG_COST = 3
+const MILK_COST = 5
 
 export default class Counters {
   constructor(game, config) {
     this.game = game
     this.config = this.getObject(config)
-
-    this.wheatCount = 0
-    this.eggCount = 0
-    this.milkCount = 0
-    this.coinCount = 0
 
     const wheatIcon = new Sprite(this.game, {
       x: 0, y: 0,
@@ -18,9 +17,9 @@ export default class Counters {
       interactive: true
     })
 
-    this.wheatCountText = new TextSprite(this.game, {
+    this.wheatCount = new TextSprite(this.game, {
       x: 60, y: 0,
-      text: this.wheatCount,
+      text: this.game.resource.wheat,
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
@@ -29,17 +28,17 @@ export default class Counters {
       key: 'egg',
     })
 
-    this.eggCountText = new TextSprite(this.game, {
+    this.eggCount = new TextSprite(this.game, {
       x: 60, y: 70,
-      text: this.eggCount,
+      text: this.game.resource.egg,
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
     this.eggSellBtn = new Sprite(this.game, {
       x: 160, y: 65,
       key: 'sellBtn',
-      tint: this.eggCount > 0 ? null : 0x808080,
-      interactive: true,
+      tint: this.game.resource.egg > 0 ? null : 0x808080,
+      interactive: this.game.resource.egg > 0,
     })
 
     const milkIcon = new Sprite(this.game, {
@@ -48,17 +47,17 @@ export default class Counters {
       key: 'milk',
     })
 
-    this.milkCountText = new TextSprite(this.game, {
+    this.milkCount = new TextSprite(this.game, {
       x: 60, y: 140,
-      text: this.milkCount,
+      text: this.game.resource.milk,
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
     this.milkSellBtn = new Sprite(this.game, {
       x: 160, y: 135,
       key: 'sellBtn',
-      tint: this.milkCount > 0 ? null : 0x808080,
-      interactive: true
+      tint: this.game.resource.milk > 0 ? null : 0x808080,
+      interactive: this.game.resource.milk > 0,
     })
 
     const coinIcon = new Sprite(this.game, {
@@ -67,76 +66,72 @@ export default class Counters {
       key: 'coin',
     })
 
-    this.coinCountText = new TextSprite(this.game, {
+    this.coinCount = new TextSprite(this.game, {
       x: 60, y: 210,
-      text: this.coinCount,
+      text: this.game.resource.coin,
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
     this.container = this.game.add.container(100, 300)
     this.container.add([
-      wheatIcon.content, this.wheatCountText.content,
-      eggIcon.content, this.eggCountText.content, this.eggSellBtn.content,
-      milkIcon.content, this.milkCountText.content, this.milkSellBtn.content,
-      coinIcon.content, this.coinCountText.content,
+      wheatIcon.content, this.wheatCount.content,
+      eggIcon.content, this.eggCount.content, this.eggSellBtn.content,
+      milkIcon.content, this.milkCount.content, this.milkSellBtn.content,
+      coinIcon.content, this.coinCount.content,
     ])
 
     this.addBtnHandlerMilk()
     this.addBtnHandlerEgg()
   }
 
+  updateMilk(resource) {
+    const {milk} = resource
+    this.milkCount.changeText(milk)
+
+    if (milk > 0) {
+      this.milkSellBtn.content.clearTint()
+      this.milkSellBtn.content.setInteractive()
+    } else {
+      this.milkSellBtn.content.tint = 0x808080
+      this.milkSellBtn.content.removeInteractive()
+    }
+  }
+
+  updateEgg(resource) {
+    const {egg} = resource
+    this.eggCount.changeText(egg)
+
+    if (egg > 0) {
+      this.eggSellBtn.content.clearTint()
+      this.eggSellBtn.content.setInteractive()
+    } else {
+      this.eggSellBtn.content.tint = 0x808080
+      this.eggSellBtn.content.removeInteractive()
+    }
+  }
+
+  updateWheat(resource) {
+    const {wheat} = resource
+    this.wheatCount.changeText(wheat)
+  }
+
+  updateCoin(resource) {
+    const {coin} = resource
+    this.coinCount.changeText(coin)
+  }
+
   addBtnHandlerMilk() {
     this.milkSellBtn.content.on('pointerdown', () => {
-      if (this.milkCount > 0) {
-        this.minusMilk()
-        this.addCoin(5)
-      }
+      this.game.events.emit(EVENTS.minusMilk)
+      this.game.events.emit(EVENTS.addCoin, MILK_COST)
     })
   }
 
   addBtnHandlerEgg() {
     this.eggSellBtn.content.on('pointerdown', () => {
-      if (this.eggCount > 0) {
-        this.minusEgg()
-        this.addCoin(3)
-      }
+      this.game.events.emit(EVENTS.minusEgg)
+      this.game.events.emit(EVENTS.addCoin, EGG_COST)
     })
-  }
-
-  minusWheat() {
-    this.wheatCountText.changeText(--this.wheatCount)
-  }
-
-  minusMilk() {
-    this.milkCountText.changeText(--this.milkCount)
-    if (this.milkCount === 0) {
-      this.milkSellBtn.content.tint = 0x808080
-    }
-  }
-
-  minusEgg() {
-    this.eggCountText.changeText(--this.eggCount)
-    if (this.eggCount === 0) {
-      this.eggSellBtn.content.tint = 0x808080
-    }
-  }
-
-  addWheat() {
-    this.wheatCountText.changeText(++this.wheatCount)
-  }
-
-  addMilk() {
-    this.milkCountText.changeText(++this.milkCount)
-    this.milkSellBtn.content.clearTint()
-  }
-
-  addEgg() {
-    this.eggCountText.changeText(++this.eggCount)
-    this.eggSellBtn.content.clearTint()
-  }
-
-  addCoin(count) {
-    this.coinCountText.changeText(this.coinCount += count)
   }
 
   getObject(config) {

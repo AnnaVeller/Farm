@@ -35,18 +35,18 @@ export default class Cell {
 
     switch (name) {
       case 'cow':
-        this.showCow()
+        this.addCow()
         break
       case 'wheat':
-        this.showWheat()
+        this.addWheat()
         break
       case 'chicken':
-        this.showChicken()
+        this.addChicken()
         break
     }
   }
 
-  showCow() {
+  addCow() {
     this.actor = new Cow(this.game, {
       x: 5, y: -20,
       key: 'cow',
@@ -55,7 +55,7 @@ export default class Cell {
     this.container.addAt(this.actor.content, 1)
   }
 
-  showWheat() {
+  addWheat() {
     this.actor = new Wheat(this.game, {
       x: 10, y: 0,
       key: 'wheat',
@@ -64,7 +64,7 @@ export default class Cell {
     this.container.addAt(this.actor.content, 1)
   }
 
-  showChicken() {
+  addChicken() {
     this.actor = new Chicken(this.game, {
       x: -10, y: -5,
       key: 'chicken',

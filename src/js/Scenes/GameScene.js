@@ -10,6 +10,14 @@ import DragNDrop from "../Sprites/DragNDrop"
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super('Game')
+
+    this.resource = {
+      wheat: 5,
+      milk: 1,
+      egg: 0,
+      coin: 0
+    }
+
   }
 
   init() {
@@ -35,10 +43,35 @@ export default class GameScene extends Phaser.Scene {
 
     const dragNDrop = new DragNDrop(this, {})
 
-    this.events.on(EVENTS.pickupWheat, counters.addWheat, counters)
-    this.events.on(EVENTS.addEgg, counters.addEgg, counters)
-    this.events.on(EVENTS.addMilk, counters.addMilk, counters)
-    this.events.on(EVENTS.eatWheat, counters.minusWheat, counters)
+    this.events.on(EVENTS.addWheat, () => {
+      this.resource.wheat += 1
+      counters.updateWheat(this.resource)
+    })
+    this.events.on(EVENTS.addEgg, () => {
+      this.resource.egg += 1
+      counters.updateEgg(this.resource)
+    })
+    this.events.on(EVENTS.addMilk, () => {
+      this.resource.milk += 1
+      counters.updateMilk(this.resource)
+    })
+    this.events.on(EVENTS.addCoin, (count) => {
+      this.resource.coin += count
+      counters.updateCoin(this.resource)
+    })
+
+    this.events.on(EVENTS.eatWheat, () => {
+      this.resource.wheat -= 1
+      counters.updateWheat(this.resource)
+    })
+    this.events.on(EVENTS.minusMilk, () => {
+      this.resource.milk -= 1
+      counters.updateMilk(this.resource)
+    })
+    this.events.on(EVENTS.minusEgg, () => {
+      this.resource.egg -= 1
+      counters.updateEgg(this.resource)
+    })
 
     this.scale.on('resize', this.resize, this)
     this.resize(this.scale.gameSize)

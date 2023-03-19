@@ -22,6 +22,7 @@ export default class Chicken extends Sprite {
   addPointerDownEvent() {
     this.content.on('pointerdown', () => {
       if (this.state === STATE.eat) return
+      if (this.game.resource.wheat <= 0) return
 
       this.state = STATE.eat
       this.timeLeft = TIME_EAT_WHEAL // sec

@@ -44,7 +44,7 @@ export default class Wheat extends Sprite {
     this.content.removeAllListeners('pointerdown')
 
     // эмитим событие, что пшеницу собрали
-    this.game.events.emit(EVENTS.pickupWheat)
+    this.game.events.emit(EVENTS.addWheat)
     this.addGrowUpTween()
   }
 
