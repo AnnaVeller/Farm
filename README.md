@@ -1,6 +1,18 @@
 # [Farm](https://annaveller.github.io/Farm/)
 
-Игра в разработке..
+Немного правил:
+
+Для добавления новой сущности на поле перенесите ее из бесплатного магазина в правом верхнем углу.
+
+Пшеница растет 10 секунд, после сбора автоматически начинает расти заново.
+
+Чтобы животные начали производство яиц и молока, нужно тапнуть на них на поле. На это уходит 1 пшеница.
+
+Корова дает 1 молоко за 20 секунд. 1 пшеницы корове хватает на 20 секунд
+
+Курица дает 1 яйцо за 10 секунд. 1 пшеницы курице хватает на 30 секунд
+
+Яйца и молоко можно продавать за 3 и 5 монет соответсвенно.
 
 ### Commands
 
@@ -21,12 +33,12 @@ gulp deploy
 
 Встроенный ресайз
 
-
 ### Источники
 
 <a href="https://www.flaticon.com/ru/free-icons/" title="природа иконки">Природа иконки от Superarticons - Flaticon</a>
 
-Ручной росписью PNG разработан 千图网, из https://ru.pngtree.com/freepng/hand-drawn-cartoon-cute-lion-cow-sheep-chicken-animal-series_5767639.html?sol=downref&id=bef
+Ручной росписью PNG разработан 千图网,
+из https://ru.pngtree.com/freepng/hand-drawn-cartoon-cute-lion-cow-sheep-chicken-animal-series_5767639.html?sol=downref&id=bef
 
 
 

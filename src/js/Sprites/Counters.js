@@ -1,6 +1,7 @@
 import Sprite from "../Engine/Sprite"
 import TextSprite from "../Engine/TextSprite"
 import {EVENTS} from "../config"
+import Button from "../Engine/Button"
 
 const EGG_COST = 3
 const MILK_COST = 5
@@ -34,11 +35,14 @@ export default class Counters {
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
-    this.eggSellBtn = new Sprite(this.game, {
+    this.eggSellBtn = new Button(this.game, {
       x: 160, y: 65,
       key: 'sellBtn',
-      tint: this.game.resource.egg > 0 ? null : 0x808080,
       interactive: this.game.resource.egg > 0,
+      OnPointerdown: () => {
+        this.game.events.emit(EVENTS.minusEgg)
+        this.game.events.emit(EVENTS.addCoin, EGG_COST)
+      }
     })
 
     const milkIcon = new Sprite(this.game, {
@@ -53,11 +57,14 @@ export default class Counters {
       textStyle: {font: '50px Monospace', fill: '#5c3b3b'},
     })
 
-    this.milkSellBtn = new Sprite(this.game, {
+    this.milkSellBtn = new Button(this.game, {
       x: 160, y: 135,
       key: 'sellBtn',
-      tint: this.game.resource.milk > 0 ? null : 0x808080,
       interactive: this.game.resource.milk > 0,
+      OnPointerdown: () => {
+        this.game.events.emit(EVENTS.minusMilk)
+        this.game.events.emit(EVENTS.addCoin, MILK_COST)
+      }
     })
 
     const coinIcon = new Sprite(this.game, {
@@ -80,34 +87,20 @@ export default class Counters {
       coinIcon.content, this.coinCount.content,
     ])
 
-    this.addBtnHandlerMilk()
-    this.addBtnHandlerEgg()
   }
 
   updateMilk(resource) {
     const {milk} = resource
     this.milkCount.changeText(milk)
 
-    if (milk > 0) {
-      this.milkSellBtn.content.clearTint()
-      this.milkSellBtn.content.setInteractive()
-    } else {
-      this.milkSellBtn.content.tint = 0x808080
-      this.milkSellBtn.content.removeInteractive()
-    }
+    this.milkSellBtn.changeInteractive(milk > 0)
   }
 
   updateEgg(resource) {
     const {egg} = resource
     this.eggCount.changeText(egg)
 
-    if (egg > 0) {
-      this.eggSellBtn.content.clearTint()
-      this.eggSellBtn.content.setInteractive()
-    } else {
-      this.eggSellBtn.content.tint = 0x808080
-      this.eggSellBtn.content.removeInteractive()
-    }
+    this.eggSellBtn.changeInteractive(egg > 0)
   }
 
   updateWheat(resource) {
@@ -118,20 +111,6 @@ export default class Counters {
   updateCoin(resource) {
     const {coin} = resource
     this.coinCount.changeText(coin)
-  }
-
-  addBtnHandlerMilk() {
-    this.milkSellBtn.content.on('pointerdown', () => {
-      this.game.events.emit(EVENTS.minusMilk)
-      this.game.events.emit(EVENTS.addCoin, MILK_COST)
-    })
-  }
-
-  addBtnHandlerEgg() {
-    this.eggSellBtn.content.on('pointerdown', () => {
-      this.game.events.emit(EVENTS.minusEgg)
-      this.game.events.emit(EVENTS.addCoin, EGG_COST)
-    })
   }
 
   getObject(config) {

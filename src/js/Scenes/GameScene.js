@@ -13,7 +13,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.resource = {
       wheat: 5,
-      milk: 1,
+      milk: 0,
       egg: 0,
       coin: 0
     }
