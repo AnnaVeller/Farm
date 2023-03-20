@@ -23,7 +23,7 @@ export default class Cell {
       x: 0, y: -50,
       text: 0,
       alpha: 0,
-      textStyle: {font: '30px Monospace', fill: '#033408'},
+      textStyle: {font: '30px Monospace', stroke: '#46ff00', strokeThickness: 3, fill: '#032a08'},
     })
 
     this.container.add([this.field.content, this.timer.content])

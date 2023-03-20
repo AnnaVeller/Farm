@@ -2,7 +2,7 @@
 
 Игра в разработке..
 
-## Commands
+### Commands
 
 `npm install`
 
@@ -10,22 +10,19 @@
 
 `npm run build`
 
-## Развернуть проект на github.io
+### Развернуть проект на github.io
 
 ```
 npm run build
 gulp deploy
 ```
 
-## Параметры
+### Параметры
 
-Есть ресайз игры
-
-(1400x1400 default size для картинок)
+Встроенный ресайз
 
 
-
-Источники
+### Источники
 
 <a href="https://www.flaticon.com/ru/free-icons/" title="природа иконки">Природа иконки от Superarticons - Flaticon</a>
 

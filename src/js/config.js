@@ -70,5 +70,11 @@ export const SCENE_CONFIG = {
       url: require('../assets/sellBtn.png'),
     },
 
+    {
+      key: 'glow',
+      type: 'image',
+      url: require('../assets/glow.png'),
+    },
+
   ]
 }

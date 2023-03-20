@@ -1,5 +1,5 @@
 const merge = require("webpack-merge")
-const base = require("./base")
+const base = require("./webpack.dev")
 const TerserPlugin = require("terser-webpack-plugin")
 
 module.exports = merge(base, {
@@ -23,4 +23,4 @@ module.exports = merge(base, {
       })
     ]
   }
-});
+})

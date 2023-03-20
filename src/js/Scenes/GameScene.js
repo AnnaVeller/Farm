@@ -27,11 +27,11 @@ export default class GameScene extends Phaser.Scene {
 
   create() {
     this.sprites.background = new Sprite(this, {
-      x: 700, y: 700,
+      origin: {x: 0, y: 0},
       key: 'background',
     })
 
-    this.containers.field = new Field(this, {x: 700, y: 400})
+    this.containers.field = new Field(this, {x: 850, y: 440})
 
     // создание счетчиков пшеницы, яиц, молока и монеток
     const counters = new Counters(this, {x: 400, y: 300})
